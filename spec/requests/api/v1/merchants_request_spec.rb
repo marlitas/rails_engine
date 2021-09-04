@@ -101,7 +101,7 @@ RSpec.describe 'Merchants API' do
 
        merchant = JSON.parse(response.body, symbolize_names: true)
 
-       expect(merchant[:date][:message]).to eq('No match found')
+       expect(merchant[:data][:message]).to eq('No match found.')
      end
    end
 end

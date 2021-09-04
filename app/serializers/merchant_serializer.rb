@@ -13,13 +13,18 @@ class MerchantSerializer
   end
 
   def self.format_merchant(merchant)
-    { data: {
+    {data:
+      if merchant.nil?
+        {message: 'No match found.'}
+      else
+        {
         id: merchant.id,
         type: 'merchant',
         attributes: {
           name: merchant.name
+          }
         }
-      }
+      end
     }
   end
 end
