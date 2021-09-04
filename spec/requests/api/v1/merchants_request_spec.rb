@@ -42,5 +42,26 @@ RSpec.describe 'Merchants API' do
 
        expect(merchants.count).to eq(50)
      end
+
+     it 'sends list of n merchants from x page' do
+       get '/api/v1/merchants?per_page=50'
+
+       expect(response).to be_successful
+
+       merchants_1 = JSON.parse(response.body, symbolize_names: true)
+
+       expect(merchants_1.count).to eq(50)
+
+       get '/api/v1/merchants?per_page=50&page=2'
+
+       expect(response).to be_successful
+
+       merchants_2 = JSON.parse(response.body, symbolize_names: true)
+
+       expect(merchants_2.count).to eq(50)
+
+       expect(merchants_2.first[:id]).to eq(merchants_1.last[:id] + 1)
+
+     end
    end
 end
