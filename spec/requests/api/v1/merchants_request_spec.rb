@@ -80,4 +80,28 @@ RSpec.describe 'Merchants API' do
        expect(merchant_response[:data][:attributes][:name]).to eq(merchant.name)
      end
    end
+
+   describe 'search' do
+     before (:each) do
+       @merchant1 = create(:merchant, name: 'Spark Dog')
+       @merchant2 = create(:merchant, name: 'Spark Boy')
+       @merchant3 = create(:merchant, name: 'Platypus')
+     end
+
+     it 'can retrieve object based on search params in alphabetical order' do
+       get '/api/v1/merchants/find?name=spark'
+
+       merchant = JSON.parse(response.body, symbolize_names: true)
+
+       expect(merchant[:data][:attributes][:name]).to eq(@merchant2.name)
+     end
+
+     it 'returns message if no match found' do
+       get '/api/v1/merchants/find?name=gibberish'
+
+       merchant = JSON.parse(response.body, symbolize_names: true)
+
+       expect(merchant[:date][:message]).to eq('No match found')
+     end
+   end
 end
