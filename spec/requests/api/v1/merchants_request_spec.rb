@@ -13,9 +13,9 @@ RSpec.describe 'Merchants API' do
 
        merchants = JSON.parse(response.body, symbolize_names: true)
 
-       expect(merchants.count).to eq(20)
+       expect(merchants[:data].count).to eq(20)
 
-       merchants.each do |merchant|
+       merchants[:data].each do |merchant|
          expect(merchant).to have_key(:id)
          expect(merchant[:id]).to be_an(Integer)
 
@@ -40,7 +40,7 @@ RSpec.describe 'Merchants API' do
 
        merchants = JSON.parse(response.body, symbolize_names: true)
 
-       expect(merchants.count).to eq(50)
+       expect(merchants[:data].count).to eq(50)
      end
 
      it 'sends list of n merchants from x page' do
@@ -50,7 +50,7 @@ RSpec.describe 'Merchants API' do
 
        merchants_1 = JSON.parse(response.body, symbolize_names: true)
 
-       expect(merchants_1.count).to eq(50)
+       expect(merchants_1[:data].count).to eq(50)
 
        get '/api/v1/merchants?per_page=50&page=2'
 
@@ -58,10 +58,26 @@ RSpec.describe 'Merchants API' do
 
        merchants_2 = JSON.parse(response.body, symbolize_names: true)
 
-       expect(merchants_2.count).to eq(50)
+       expect(merchants_2[:data].count).to eq(50)
 
-       expect(merchants_2.first[:id]).to eq(merchants_1.last[:id] + 1)
+       expect(merchants_2[:data].first[:id]).to eq(merchants_1[:data].last[:id] + 1)
 
+     end
+   end
+
+   describe 'show' do
+     it 'can retrieve info on one merchant' do
+       merchant = create(:merchant)
+
+       get "/api/v1/merchants/#{merchant.id}"
+
+       expect(response).to be_successful
+
+       merchant_response = JSON.parse(response.body, symbolize_names: true)
+
+       expect(merchant_response[:data][:id]).to eq(merchant.id)
+       expect(merchant_response[:data][:type]).to eq('merchant')
+       expect(merchant_response[:data][:attributes][:name]).to eq(merchant.name)
      end
    end
 end
