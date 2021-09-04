@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Merchants API' do
    describe 'index' do
      before(:each) do
-       create_list(:merchant, 22)
+       create_list(:merchant, 100)
      end
 
      it 'sends default list of first 20 merchants' do
@@ -31,6 +31,16 @@ RSpec.describe 'Merchants API' do
          expect(merchant[:attributes]).to_not have_key(:created_at)
          expect(merchant[:attributes]).to_not have_key(:updated_at)
        end
+     end
+
+     it 'sends list of first n merchants based on query input' do
+       get '/api/v1/merchants?per_page=50'
+
+       expect(response).to be_successful
+
+       merchants = JSON.parse(response.body, symbolize_names: true)
+
+       expect(merchants.count).to eq(50)
      end
    end
 end
