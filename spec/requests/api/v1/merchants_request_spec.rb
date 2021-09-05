@@ -45,7 +45,6 @@ RSpec.describe 'Merchants API' do
 
      it 'sends list of n merchants from x page' do
        get '/api/v1/merchants?per_page=50'
-
        expect(response).to be_successful
 
        merchants_1 = JSON.parse(response.body, symbolize_names: true)
@@ -53,13 +52,11 @@ RSpec.describe 'Merchants API' do
        expect(merchants_1[:data].count).to eq(50)
 
        get '/api/v1/merchants?per_page=50&page=2'
-
        expect(response).to be_successful
 
        merchants_2 = JSON.parse(response.body, symbolize_names: true)
 
        expect(merchants_2[:data].count).to eq(50)
-
        expect(merchants_2[:data].first[:id]).to eq(merchants_1[:data].last[:id] + 1)
 
      end
@@ -70,7 +67,6 @@ RSpec.describe 'Merchants API' do
        merchant = create(:merchant)
 
        get "/api/v1/merchants/#{merchant.id}"
-
        expect(response).to be_successful
 
        merchant_response = JSON.parse(response.body, symbolize_names: true)
@@ -90,6 +86,7 @@ RSpec.describe 'Merchants API' do
 
      it 'can retrieve object based on search params in alphabetical order' do
        get '/api/v1/merchants/find?name=spark'
+       expect(response).to be_successful
 
        merchant = JSON.parse(response.body, symbolize_names: true)
 
@@ -98,10 +95,34 @@ RSpec.describe 'Merchants API' do
 
      it 'returns message if no match found' do
        get '/api/v1/merchants/find?name=gibberish'
+       expect(response).to be_successful
 
        merchant = JSON.parse(response.body, symbolize_names: true)
 
        expect(merchant[:data][:message]).to eq('No match found.')
+     end
+   end
+
+   describe 'total revenue' do
+     before(:each) do
+       @merchant = create(:merchant)
+       
+       @item1 = create(:item, merchant: @merchant)
+       @item2 = create(:item, merchant: @merchant)
+
+       @invoice1 = create(:invoice_shipped, merchant: @merchant)
+       @invoice2 = create(:invoice_shipped, merchant: @merchant)
+
+       @ii1 = create(:invoice_item, item: @item1, invoice: @invoice1, unit_price: 10.00, quantity: 2)
+       @ii2 = create(:invoice_item, item: @item2, invoice: @invoice2, unit_price: 15.50, quantity: 2)
+     end
+
+     it 'returns total revenue for merchant' do
+       get "/api/v1/revenue/merchants/#{@merchant.id}"
+       expect(response).to be_successful
+
+       #total revenue = 51.00
+
      end
    end
 end

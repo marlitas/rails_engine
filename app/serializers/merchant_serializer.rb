@@ -27,4 +27,8 @@ class MerchantSerializer
       end
     }
   end
+
+  def self.merchant_revenue(merchant)
+
+  end
 end
