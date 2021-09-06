@@ -6,4 +6,9 @@ class Merchant < ApplicationRecord
   def self.search(query)
     where('lower(name) like ?', "%#{query.downcase}%").order(:name).first
   end
+
+  def total_revenue
+    invoices.where('invoices.status = ?', 'shipped')
+    .sum('invoice_items.quantity * invoice_items.unit_price').round(2)
+  end
 end
