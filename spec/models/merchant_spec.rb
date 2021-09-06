@@ -51,6 +51,13 @@ RSpec.describe Merchant, type: :model do
       it 'can return the total revenue of a specific merchant' do
         expect(@merchant1.total_revenue).to eq(51.00)
       end
+
+      it 'can only return revenue from shipped invoices' do
+        invoice = create(:invoice_packaged, merchant: @merchant1)
+        ii = create(:invoice_item, item: @item1, invoice: invoice, unit_price: 100.00, quantity: 1)
+        
+        expect(@merchant1.total_revenue).to eq(51.00)
+      end
     end
   end
 end
