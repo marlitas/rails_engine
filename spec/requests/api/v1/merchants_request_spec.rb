@@ -106,7 +106,7 @@ RSpec.describe 'Merchants API' do
    describe 'total revenue' do
      before(:each) do
        @merchant = create(:merchant)
-       
+
        @item1 = create(:item, merchant: @merchant)
        @item2 = create(:item, merchant: @merchant)
 
@@ -121,8 +121,12 @@ RSpec.describe 'Merchants API' do
        get "/api/v1/revenue/merchants/#{@merchant.id}"
        expect(response).to be_successful
 
-       #total revenue = 51.00
+       merchant = JSON.parse(response.body, symbolize_names: true)
 
+       expect(merchant[:data][:id]).to eq(@merchant.id)
+       expect(merchant[:data][:type]).to eq('merchant_revenue')
+       expect(merchant[:data][:attributes][:revenue]).to eq(51.00)
+       expect(merchant[:data][:attributes]).to_not have_key(:name)
      end
    end
 end
