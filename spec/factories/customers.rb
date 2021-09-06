@@ -1,8 +1,6 @@
 FactoryBot.define do
-  factory :customer do
-    name { Faker::Movies::StarWars.vehicle }
-    description { Faker::Movies::StarWars.quote }
-    unit_price {Faker::Number.decimal(l_digits: 3, r_digits: 2)}
-    association :merchant, factory: :merchant
+  factory :customer, class: Customer do
+    first_name { Faker::Name.first_name}
+    last_name { Faker::Name.last_name}
   end
 end
