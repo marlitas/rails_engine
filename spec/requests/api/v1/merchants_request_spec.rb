@@ -17,7 +17,7 @@ RSpec.describe 'Merchants API' do
 
        merchants[:data].each do |merchant|
          expect(merchant).to have_key(:id)
-         expect(merchant[:id]).to be_an(Integer)
+         expect(merchant[:id]).to be_an(String)
 
          expect(merchant).to have_key(:type)
          expect(merchant[:type]).to eq('merchant')
@@ -57,7 +57,7 @@ RSpec.describe 'Merchants API' do
        merchants_2 = JSON.parse(response.body, symbolize_names: true)
 
        expect(merchants_2[:data].count).to eq(50)
-       expect(merchants_2[:data].first[:id]).to eq(merchants_1[:data].last[:id] + 1)
+       expect(merchants_2[:data].first[:id]).to eq("#{merchants_1[:data].last[:id].to_i + 1}")
 
      end
    end
@@ -71,7 +71,7 @@ RSpec.describe 'Merchants API' do
 
        merchant_response = JSON.parse(response.body, symbolize_names: true)
 
-       expect(merchant_response[:data][:id]).to eq(merchant.id)
+       expect(merchant_response[:data][:id]).to eq("#{merchant.id}")
        expect(merchant_response[:data][:type]).to eq('merchant')
        expect(merchant_response[:data][:attributes][:name]).to eq(merchant.name)
      end
@@ -123,7 +123,7 @@ RSpec.describe 'Merchants API' do
 
        merchant = JSON.parse(response.body, symbolize_names: true)
 
-       expect(merchant[:data][:id]).to eq(@merchant.id)
+       expect(merchant[:data][:id]).to eq("#{@merchant.id}")
        expect(merchant[:data][:type]).to eq('merchant_revenue')
        expect(merchant[:data][:attributes][:revenue]).to eq(51.00)
        expect(merchant[:data][:attributes]).to_not have_key(:name)
