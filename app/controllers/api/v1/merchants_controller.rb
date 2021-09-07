@@ -8,7 +8,12 @@ class Api::V1::MerchantsController <ApplicationController
   end
 
   def show
-    merchant = Merchant.find(params[:id])
+    item = Item.find(params[:item_id])
+    if item.merchant_id.nil?
+      merchant = Merchant.find(params[:id])
+    else
+      merchant = Merchant.find(item.merchant_id)
+    end
     render json: MerchantSerializer.format_merchant(merchant)
   end
 
