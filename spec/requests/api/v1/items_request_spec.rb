@@ -84,4 +84,33 @@ RSpec.describe 'items requests' do
       expect(item_response[:data][:attributes][:unit_price]).to eq(item.unit_price)
     end
   end
+
+  describe 'search' do
+    before (:each) do
+      @item1 = create(:item, name: 'Ball')
+      @item2 = create(:item, name: 'Bouncy Ball')
+      @item3 = create(:item, name: 'Baseball')
+      @item4 = create(:item, name: 'Tomato')
+    end
+
+    it 'can retrieve items based on search params' do
+      get '/api/v1/items/find?name=ball'
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(items[:data].first[:name]).to eq(@item1.name)
+      expect(items[:data].last[:name]).to eq(@item2.name)
+      expect(items[:data].length).to eq(3)
+    end
+
+    it 'returns message if no match found' do
+      get '/api/v1/items/find?name=gibberish'
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(merchant[:data][:message]).to eq('No match found.')
+    end
+  end
 end
