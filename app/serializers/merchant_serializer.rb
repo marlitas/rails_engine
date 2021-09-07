@@ -2,7 +2,7 @@ class MerchantSerializer
   def self.format_merchants(merchants)
     { data: merchants.map do |merchant|
       {
-        id: merchant.id,
+        id: "#{merchant.id}",
         type: 'merchant',
         attributes: {
           name: merchant.name
@@ -18,7 +18,7 @@ class MerchantSerializer
         {message: 'No match found.'}
       else
         {
-        id: merchant.id,
+        id: "#{merchant.id}",
         type: 'merchant',
         attributes: {
           name: merchant.name
@@ -31,7 +31,7 @@ class MerchantSerializer
   def self.revenue(merchant)
     {data:
       {
-      id: merchant.id,
+      id: "#{merchant.id}",
       type: 'merchant_revenue',
       attributes: {
         revenue: merchant.total_revenue
