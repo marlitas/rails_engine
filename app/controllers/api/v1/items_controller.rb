@@ -12,6 +12,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def find
-    
+    items = Item.search(params[:name])
+    render json: ItemSerializer.format_items(items)
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe 'items requests' do
 
       items[:data].each do |item|
         expect(item).to have_key(:id)
-        expect(item[:id]).to be_an(Integer)
+        expect(item[:id]).to be_a(String)
 
         expect(item).to have_key(:type)
         expect(item[:type]).to eq('item')
@@ -63,7 +63,7 @@ RSpec.describe 'items requests' do
       items_2 = JSON.parse(response.body, symbolize_names: true)
 
       expect(items_2[:data].count).to eq(50)
-      expect(items_2[:data].first[:id]).to eq(items_1[:data].last[:id] + 1)
+      expect(items_2[:data].first[:id]).to eq("#{items_1[:data].last[:id].to_i + 1}")
 
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe 'items requests' do
 
       item_response = JSON.parse(response.body, symbolize_names: true)
 
-      expect(item_response[:data][:id]).to eq(item.id)
+      expect(item_response[:data][:id]).to eq("#{item.id}")
       expect(item_response[:data][:type]).to eq('item')
       expect(item_response[:data][:attributes][:name]).to eq(item.name)
       expect(item_response[:data][:attributes][:description]).to eq(item.description)
@@ -99,8 +99,8 @@ RSpec.describe 'items requests' do
 
       items = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items[:data].first[:name]).to eq(@item1.name)
-      expect(items[:data].last[:name]).to eq(@item2.name)
+      expect(items[:data].first[:attributes][:name]).to eq(@item1.name)
+      expect(items[:data].last[:attributes][:name]).to eq(@item2.name)
       expect(items[:data].length).to eq(3)
     end
 
@@ -110,7 +110,7 @@ RSpec.describe 'items requests' do
 
       items = JSON.parse(response.body, symbolize_names: true)
 
-      expect(merchant[:data][:message]).to eq('No match found.')
+      expect(items[:data][:message]).to eq('No match found.')
     end
   end
 end
