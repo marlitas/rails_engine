@@ -1,8 +1,12 @@
 class Api::V1::ItemsController < ApplicationController
   def index
-    params[:per_page] = 20 if params[:per_page].nil?
-    params[:page] = 1 if params[:page].nil?
-    items = Item.paginate(page: params[:page], per_page: params[:per_page])
+    if params[:merchant_id].nil?
+      params[:per_page] = 20 if params[:per_page].nil?
+      params[:page] = 1 if params[:page].nil?
+      items = Item.paginate(page: params[:page], per_page: params[:per_page])
+    else
+      items = Merchant.find(params[:merchant_id]).items
+    end
     render json: ItemSerializer.format_items(items)
   end
 

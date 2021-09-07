@@ -8,8 +8,8 @@ class Api::V1::MerchantsController <ApplicationController
   end
 
   def show
-    item = Item.find(params[:item_id])
-    if item.merchant_id.nil?
+    item = Item.find(params[:item_id]) unless params[:item_id].nil?
+    if item.nil?
       merchant = Merchant.find(params[:id])
     else
       merchant = Merchant.find(item.merchant_id)

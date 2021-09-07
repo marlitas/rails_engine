@@ -129,4 +129,38 @@ RSpec.describe 'Merchants API' do
        expect(merchant[:data][:attributes]).to_not have_key(:name)
      end
    end
+
+   describe 'associated items' do
+     before(:each) do
+       @merchant1 = create(:merchant)
+       @merchant2 = create(:merchant)
+
+       @item1 = create(:item, merchant: @merchant1)
+       @item2 = create(:item, merchant: @merchant1)
+       @item3 = create(:item, merchant: @merchant2)
+     end
+
+     it 'can retrieve all merchants items' do
+       get "/api/v1/merchants/#{@merchant1.id}/items"
+       expect(response).to be_successful
+
+       items = JSON.parse(response.body, symbolize_names: true)
+
+       expect(items[:data].length).to eq(2)
+       items[:data].each do |item|
+         expect(item[:attributes][:merchant_id]).to eq(@merchant1.id)
+       end
+     end
+
+     it 'does not retrieve another merchants items' do
+       get "/api/v1/merchants/#{@merchant1.id}/items"
+       expect(response).to be_successful
+
+       items = JSON.parse(response.body, symbolize_names: true)
+
+       items[:data].each do |item|
+         expect(item[:id]).to_not eq(@item3.id.to_s)
+       end
+     end
+   end
 end
