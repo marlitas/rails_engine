@@ -1,9 +1,6 @@
 class ItemSerializer
   def self.format_items(items)
     { data:
-    if items.empty?
-      {message: 'No match found.'}
-    else
      items.map do |item|
        {
         id: "#{item.id}",
@@ -16,7 +13,6 @@ class ItemSerializer
         }
         }
       end
-    end
     }
   end
 
