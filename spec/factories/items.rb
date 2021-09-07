@@ -1,4 +1,4 @@
-FactoryBot define do
+FactoryBot.define do
   factory :item do
     name { Faker::Movies::StarWars.vehicle }
     description { Faker::Movies::StarWars.quote }
