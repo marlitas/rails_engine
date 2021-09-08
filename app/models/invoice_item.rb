@@ -10,4 +10,13 @@ class InvoiceItem < ApplicationRecord
     .group("week")
     .order("week")
   end
+
+  def self.date_range_revenue(start, end_date)
+    joins(invoice: :transactions)
+    .where('invoices.status = ?', 'shipped')
+    .where('transactions.result = ?', 'success')
+    .where('invoices.updated_at >= ?', start.to_datetime)
+    .where('invoices.updated_at <= ?', end_date.to_datetime)
+    .sum("invoice_items.unit_price * invoice_items.quantity")
+  end
 end

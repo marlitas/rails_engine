@@ -8,14 +8,14 @@ RSpec.describe InvoiceItem, type: :model do
 
   describe 'class methods' do
     before(:each) do
-      @invoice1 = create(:invoice_shipped, updated_at: Time.new(2012, 03, 05))
-      @invoice2 = create(:invoice_shipped, updated_at: Time.new(2012, 03, 06))
-      @invoice3 = create(:invoice_shipped, updated_at: Time.new(2012, 03, 14 ))
-      @invoice4 = create(:invoice_shipped, updated_at: Time.new(2012, 03, 15))
-      @invoice5 = create(:invoice_shipped, updated_at: Time.new(2012, 03, 20))
-      @invoice6 = create(:invoice_shipped, updated_at: Time.new(2012, 03, 22))
-      @invoice7 = create(:invoice_packaged, updated_at: Time.new(2012, 03, 05))
-      @invoice8 = create(:invoice_returned, updated_at: Time.new(2012, 03, 15))
+      @invoice1 = create(:invoice_shipped, updated_at: DateTime.new(2012, 03, 05))
+      @invoice2 = create(:invoice_shipped, updated_at: DateTime.new(2012, 03, 06))
+      @invoice3 = create(:invoice_shipped, updated_at: DateTime.new(2012, 03, 14 ))
+      @invoice4 = create(:invoice_shipped, updated_at: DateTime.new(2012, 03, 15))
+      @invoice5 = create(:invoice_shipped, updated_at: DateTime.new(2012, 03, 20))
+      @invoice6 = create(:invoice_shipped, updated_at: DateTime.new(2012, 03, 22))
+      @invoice7 = create(:invoice_packaged, updated_at: DateTime.new(2012, 03, 05))
+      @invoice8 = create(:invoice_returned, updated_at: DateTime.new(2012, 03, 15))
 
       @transaction1 = create(:transaction, invoice: @invoice1)
       @transaction2 = create(:transaction_failed, invoice: @invoice2)
@@ -42,6 +42,10 @@ RSpec.describe InvoiceItem, type: :model do
       expect(result.first.week).to eq(DateTime.new(2012, 03, 05))
       expect(result.last.revenue).to eq(40.00)
       expect(result.last.week).to eq(DateTime.new(2012, 03, 19))
+    end
+
+    it 'can retrieve revenue for date range' do
+      expect(InvoiceItem.date_range_revenue("2012-03-06", "2012-03-20")).to eq(70.50)
     end
   end
 end
