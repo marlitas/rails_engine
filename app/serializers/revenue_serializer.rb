@@ -1,6 +1,6 @@
 class RevenueSerializer
   # include FastJsonapi::ObjectSerializer
-  # attributes :revenue
+  attributes :revenue
   def self.format_weekly_revenue(revenues)
     {data:
       revenues.map do |revenue|
