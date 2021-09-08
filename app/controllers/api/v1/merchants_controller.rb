@@ -28,7 +28,12 @@ class Api::V1::MerchantsController <ApplicationController
   end
 
   def top_revenue
-    merchants = Merchant.top_revenue(params[:quantity])
-    render json: MerchantSerializer.top_revenue(merchants)
+    params
+    if params[:quantity].to_i.to_s == params[:quantity] && params[:quantity].to_i > 0
+      merchants = Merchant.top_revenue(params[:quantity])
+      render json: MerchantSerializer.top_revenue(merchants)
+    else
+      render json: {error: 'Quantity param missing or incorrect formatting'}, status: :bad_request
+    end
   end
 end

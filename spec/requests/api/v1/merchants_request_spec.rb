@@ -178,17 +178,17 @@ RSpec.describe 'Merchants API' do
        end
      end
 
-     xit 'returns error if quantity param missing' do
+     it 'returns error if quantity param missing' do
        get '/api/v1/revenue/merchants'
        expect(response).not_to be_successful
      end
 
-     xit 'returns error if quantity param is not integer' do
+     it 'returns error if quantity param is not integer' do
        get '/api/v1/revenue/merchants?quantity=4.2'
        expect(response).not_to be_successful
      end
 
-     xit 'returns error if quantity param is less than zero' do
+     it 'returns error if quantity param is less than zero' do
        get '/api/v1/revenue/merchants?quantity=-2'
        expect(response).not_to be_successful
      end
