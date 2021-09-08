@@ -73,5 +73,20 @@ RSpec.describe 'Invoice Items API' do
 
       expect(revenue[:data][:attributes][:revenue]).to eq(70.50)
     end
+
+    it 'returns error if date params missing' do
+      get '/api/v1/revenue'
+      expect(response).to_not be_successful
+    end
+
+    it 'returns error if start params blank' do
+      get '/api/v1/revenue?start=2012-03-06&end='
+      expect(response).to_not be_successful
+    end
+
+    it 'returns error if end params blank' do
+      get '/api/v1/revenue?start=&end=2012-03-20'
+      expect(response).to_not be_successful
+    end
   end
 end

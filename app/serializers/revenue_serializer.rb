@@ -1,6 +1,5 @@
 class RevenueSerializer
   # include FastJsonapi::ObjectSerializer
-  attributes :revenue
   def self.format_weekly_revenue(revenues)
     {data:
       revenues.map do |revenue|
@@ -18,6 +17,7 @@ class RevenueSerializer
   def self.format_range_revenue(revenue)
     { data:
       { id: nil,
+        type: 'revenue',
         attributes: {
           revenue: revenue
         }
