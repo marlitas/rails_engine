@@ -130,6 +130,60 @@ RSpec.describe 'Merchants API' do
      end
    end
 
+   describe 'sorted merchants' do
+     before(:each) do
+       create_list(:merchant, 5)
+
+       @invoice1 = create(:invoice_packaged, merchant: Merchant.first)
+       @invoice2 = create(:invoice_shipped, merchant: Merchant.second)
+       @invoice3 = create(:invoice_shipped, merchant: Merchant.third)
+       @invoice4 = create(:invoice_shipped, merchant: Merchant.fourth)
+       @invoice5 = create(:invoice_shipped, merchant: Merchant.fifth)
+
+       @transaction = create(:transaction_failed, invoice: @invoice4)
+
+       @ii1 = create(:invoice_item, invoice: @invoice1, unit_price: 50.00, quantity: 2)
+       @ii2 = create(:invoice_item, invoice: @invoice2, unit_price: 100.50, quantity: 2)
+       @ii3 = create(:invoice_item, invoice: @invoice3, unit_price: 10.00, quantity: 1)
+       @ii4 = create(:invoice_item, invoice: @invoice4, unit_price: 50.00, quantity: 2)
+       @ii5 = create(:invoice_item, invoice: @invoice5, unit_price: 10.00, quantity: 2)
+     end
+
+     it 'can return merchants sorted by revenue' do
+       get '/api/v1/revenue/merchants?quantity=3'
+       expect(response).to be_successful
+
+       merchants = JSON.parse(response.body, symbolize_names: true)
+
+       expect(merchant[:data].length).to eq(3)
+       expect(merchant[:data].first[:attributes][:revenue]).to eq(201.00)
+       expect(merchant[:data].last[:attributes][:revenue]).to eq(10.00)
+
+       merchants[:data].each do |merchant|
+         expect(merchant[:type]).to eq('merchant_name_revenue')
+         expect(merchant[:attributes]).to have_key(:name)
+         expect(merchant[:attributes][:name]).to be_a(String)
+         expect(merchant[:attributes]).to have_key(:revenue)
+         expect(merchant[:attributes][:revenue]).to be_a(Float)
+       end
+     end
+
+     it 'returns error if quantity param missing' do
+       get '/api/v1/revenue/merchants'
+       expect(response).not_to be_successful
+     end
+
+     it 'returns error if quantity param is not integer' do
+       get '/api/v1/revenue/merchants?quantity=4.2'
+       expect(response).not_to be_successful
+     end
+
+     it 'returns error if quantity param is less than zero' do
+       get '/api/v1/revenue/merchants?quantity=-2'
+       expect(response).not_to be_successful
+     end
+   end
+
    describe 'associated items' do
      before(:each) do
        @merchant1 = create(:merchant)
