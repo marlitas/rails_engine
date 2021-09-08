@@ -4,7 +4,7 @@ class Api::V1::MerchantsController <ApplicationController
     params[:page] = 1 if params[:page].nil? || params[:page].to_i <= 0
     merchants = Merchant.paginate(page: params[:page], per_page: params[:per_page])
 
-    render json: MerchantSerializer.format_merchants(merchants)
+    render json: MerchantSerializer.new(merchants)
   end
 
   def show
@@ -14,12 +14,12 @@ class Api::V1::MerchantsController <ApplicationController
     else
       merchant = Merchant.find(item.merchant_id)
     end
-    render json: MerchantSerializer.format_merchant(merchant)
+    render json: MerchantSerializer.new(merchant)
   end
 
   def find
     merchant = Merchant.search(params[:name])
-    render json: MerchantSerializer.format_merchant(merchant)
+    render json: MerchantSerializer.new(merchant)
   end
 
   def revenue

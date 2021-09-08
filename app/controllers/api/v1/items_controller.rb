@@ -7,16 +7,16 @@ class Api::V1::ItemsController < ApplicationController
     else
       items = Merchant.find(params[:merchant_id]).items
     end
-    render json: ItemSerializer.format_items(items)
+    render json: ItemSerializer.new(items)
   end
 
   def show
     item = Item.find(params[:id])
-    render json: ItemSerializer.format_item(item)
+    render json: ItemSerializer.new(item)
   end
 
   def find
     items = Item.search(params[:name])
-    render json: ItemSerializer.format_items(items)
+    render json: ItemSerializer.new(items)
   end
 end
