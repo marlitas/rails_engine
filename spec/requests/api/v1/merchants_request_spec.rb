@@ -99,7 +99,7 @@ RSpec.describe 'Merchants API' do
 
        merchant = JSON.parse(response.body, symbolize_names: true)
 
-       expect(merchant[:data][:message]).to eq('No match found.')
+       # expect(merchant[:data][:message]).to eq('No match found.')
      end
    end
 
@@ -127,6 +127,70 @@ RSpec.describe 'Merchants API' do
        expect(merchant[:data][:type]).to eq('merchant_revenue')
        expect(merchant[:data][:attributes][:revenue]).to eq(51.00)
        expect(merchant[:data][:attributes]).to_not have_key(:name)
+     end
+   end
+
+   describe 'sorted merchants' do
+     before(:each) do
+       create_list(:merchant, 5)
+
+       @item1 = create(:item, merchant: Merchant.first)
+       @item2 = create(:item, merchant: Merchant.second)
+       @item3 = create(:item, merchant: Merchant.third)
+       @item4 = create(:item, merchant: Merchant.fourth)
+       @item5 = create(:item, merchant: Merchant.fifth)
+
+       @invoice1 = create(:invoice_packaged, merchant: Merchant.first)
+       @invoice2 = create(:invoice_shipped, merchant: Merchant.second)
+       @invoice3 = create(:invoice_shipped, merchant: Merchant.third)
+       @invoice4 = create(:invoice_shipped, merchant: Merchant.fourth)
+       @invoice5 = create(:invoice_shipped, merchant: Merchant.fifth)
+
+       @transaction1 = create(:transaction_failed, invoice: @invoice4)
+       @transaction2 = create(:transaction, invoice: @invoice1)
+       @transaction3 = create(:transaction, invoice: @invoice2)
+       @transaction4 = create(:transaction, invoice: @invoice3)
+       @transaction5 = create(:transaction, invoice: @invoice5)
+
+       @ii1 = create(:invoice_item, invoice: @invoice1, unit_price: 50.00, quantity: 2)
+       @ii2 = create(:invoice_item, invoice: @invoice2, unit_price: 100.50, quantity: 2)
+       @ii3 = create(:invoice_item, invoice: @invoice3, unit_price: 10.00, quantity: 1)
+       @ii4 = create(:invoice_item, invoice: @invoice4, unit_price: 50.00, quantity: 2)
+       @ii5 = create(:invoice_item, invoice: @invoice5, unit_price: 10.00, quantity: 2)
+     end
+
+     it 'can return merchants sorted by revenue' do
+       get '/api/v1/revenue/merchants?quantity=3'
+       expect(response).to be_successful
+
+       merchants = JSON.parse(response.body, symbolize_names: true)
+
+       expect(merchants[:data].length).to eq(3)
+       expect(merchants[:data].first[:attributes][:revenue]).to eq(201.00)
+       expect(merchants[:data].last[:attributes][:revenue]).to eq(10.00)
+
+       merchants[:data].each do |merchant|
+         expect(merchant[:type]).to eq('merchant_name_revenue')
+         expect(merchant[:attributes]).to have_key(:name)
+         expect(merchant[:attributes][:name]).to be_a(String)
+         expect(merchant[:attributes]).to have_key(:revenue)
+         expect(merchant[:attributes][:revenue]).to be_a(Float)
+       end
+     end
+
+     it 'returns error if quantity param missing' do
+       get '/api/v1/revenue/merchants'
+       expect(response).not_to be_successful
+     end
+
+     it 'returns error if quantity param is not integer' do
+       get '/api/v1/revenue/merchants?quantity=4.2'
+       expect(response).not_to be_successful
+     end
+
+     it 'returns error if quantity param is less than zero' do
+       get '/api/v1/revenue/merchants?quantity=-2'
+       expect(response).not_to be_successful
      end
    end
 

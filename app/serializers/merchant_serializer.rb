@@ -1,32 +1,6 @@
 class MerchantSerializer
-  def self.format_merchants(merchants)
-    { data: merchants.map do |merchant|
-      {
-        id: "#{merchant.id}",
-        type: 'merchant',
-        attributes: {
-          name: merchant.name
-        }
-      }
-    end
-    }
-  end
-
-  def self.format_merchant(merchant)
-    {data:
-      if merchant.nil?
-        {message: 'No match found.'}
-      else
-        {
-        id: "#{merchant.id}",
-        type: 'merchant',
-        attributes: {
-          name: merchant.name
-          }
-        }
-      end
-    }
-  end
+  include FastJsonapi::ObjectSerializer
+  attributes :name
 
   def self.revenue(merchant)
     {data:
@@ -37,6 +11,21 @@ class MerchantSerializer
         revenue: merchant.total_revenue
         }
       }
+    }
+  end
+
+  def self.top_revenue(merchants)
+    {data:
+      merchants.map do |merchant|
+        {
+        id: "#{merchant.id}",
+        type: 'merchant_name_revenue',
+        attributes: {
+          name: merchant.name,
+          revenue: merchant.revenue
+          }
+        }
+      end
     }
   end
 end
