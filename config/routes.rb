@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get '/items/find_all', to: 'items#find'
       get '/revenue/merchants/:id', to: 'merchants#revenue'
       get '/revenue/weekly', to: 'revenue#week'
+      get '/revenue', to: 'revenue#date_range'
       resources :merchants, only: [:index, :show] do
         get '/items', to: 'items#index'
       end

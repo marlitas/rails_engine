@@ -36,6 +36,7 @@ RSpec.describe InvoiceItem, type: :model do
       @ii7 = create(:invoice_item, invoice: @invoice7, unit_price: 100.99, quantity: 1)
       @ii8 = create(:invoice_item, invoice: @invoice8, unit_price: 100.99, quantity: 1)
     end
+
     it 'can retrieve revenue by week' do
       result = InvoiceItem.weekly_revenue
       expect(result.first.revenue).to eq(20.00)
