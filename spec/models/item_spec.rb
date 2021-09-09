@@ -28,4 +28,21 @@ RSpec.describe Item, type: :model do
       end
     end
   end
+
+  describe 'instance methods' do
+    describe 'solo invoice' do
+      it 'can find all invoices where it is the only item' do
+        create_list(:item, 2)
+        create_list(:invoice_shipped, 4)
+
+        ii1 = create(:invoice_item, item: Item.first, invoice: Invoice.first)
+        ii2 = create(:invoice_item, item: Item.second, invoice: Invoice.second)
+        ii3 = create(:invoice_item, item: Item.first, invoice: Invoice.second)
+        ii4 = create(:invoice_item, item: Item.first, invoice: Invoice.third)
+        ii5 = create(:invoice_item, item: Item.second, invoice: Invoice.fourth)
+
+        expect(Item.first.solo_invoice).to eq([Invoice.third, Invoice.first])
+      end
+    end
+  end
 end

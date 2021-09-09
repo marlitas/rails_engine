@@ -48,5 +48,9 @@ RSpec.describe InvoiceItem, type: :model do
     it 'can retrieve revenue for date range' do
       expect(InvoiceItem.date_range_revenue("2012-03-06", "2012-03-20")).to eq(70.50)
     end
+
+    it 'can find all invoices with one item' do
+
+    end
   end
 end

@@ -19,4 +19,11 @@ class InvoiceItem < ApplicationRecord
     .where('invoices.updated_at <= ?', end_date.to_datetime)
     .sum("invoice_items.unit_price * invoice_items.quantity")
   end
+
+  def self.single_item_invoices
+    joins(:invoice)
+    .select('invoices.*')
+    .group('invoices.id')
+    .having('count(invoice_items.invoice_id) = 1')
+  end
 end
