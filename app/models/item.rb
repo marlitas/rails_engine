@@ -8,8 +8,8 @@ class Item < ApplicationRecord
   end
 
   def solo_invoice
-    Invoice.single_item.find_all do |invoice|
-      Invoice.find(invoice.id).items.include?(self)
+    Invoice.single_item.find_all do |id|
+      Invoice.find(id).items.include?(self)
     end
   end
 end

@@ -41,7 +41,7 @@ RSpec.describe Item, type: :model do
         ii4 = create(:invoice_item, item: Item.first, invoice: Invoice.third)
         ii5 = create(:invoice_item, item: Item.second, invoice: Invoice.fourth)
 
-        expect(Item.first.solo_invoice).to eq([Invoice.third, Invoice.first])
+        expect(Item.first.solo_invoice).to eq([Invoice.first.id, Invoice.third.id])
       end
     end
   end
