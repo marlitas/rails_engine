@@ -167,13 +167,21 @@ RSpec.describe 'items requests' do
 
        item_response = JSON.parse(response.body, symbolize_names: true)
 
-       #expect(item.name).to eq('New Thing')
-       #expect(item.description).to eq('With new stuff')
        expect(item_response[:data][:type]).to eq('item')
        expect(item_response[:data][:attributes][:name]).to eq('New Thing')
        expect(item_response[:data][:attributes][:description]).to eq('With new stuff')
        expect(item_response[:data][:attributes][:unit_price]).to eq(99999.99)
        expect(item_response[:data][:attributes][:merchant_id]).to eq(item.merchant_id)
+     end
+     it 'does not update if merchant id does not exist' do
+       item = create(:item)
+       put "/api/v1/items/#{item.id}", params: {
+         name: 'New Thing',
+         description: 'With new stuff',
+         unit_price: 99999.99,
+         merchant_id: 234567
+       }, as: :json
+       expect(response).to_not be_successful
      end
    end
 

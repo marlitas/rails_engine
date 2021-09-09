@@ -26,9 +26,14 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def update
-    item = Item.find(params[:id])
-    item.update(item_params)
-    render json: ItemSerializer.new(item), status: :accepted
+    require "pry";binding.pry
+    if Merchant.find(params[:merchant_id])
+      item = Item.find(params[:id])
+      item.update(item_params)
+      render json: ItemSerializer.new(item), status: :accepted
+    else
+      render json: {error: 'merchant does not exist'}, status: :not_found
+    end
   end
 
   private
