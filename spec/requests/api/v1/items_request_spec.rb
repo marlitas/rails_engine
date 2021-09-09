@@ -173,6 +173,7 @@ RSpec.describe 'items requests' do
        expect(item_response[:data][:attributes][:unit_price]).to eq(99999.99)
        expect(item_response[:data][:attributes][:merchant_id]).to eq(item.merchant_id)
      end
+     
      it 'does not update if merchant id does not exist' do
        item = create(:item)
        put "/api/v1/items/#{item.id}", params: {

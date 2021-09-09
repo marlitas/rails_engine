@@ -26,8 +26,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def update
-    require "pry";binding.pry
-    if Merchant.find(params[:merchant_id])
+    if Merchant.exists?(id: params[:merchant_id])
       item = Item.find(params[:id])
       item.update(item_params)
       render json: ItemSerializer.new(item), status: :accepted
