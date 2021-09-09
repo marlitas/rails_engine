@@ -19,4 +19,14 @@ class Api::V1::ItemsController < ApplicationController
     items = Item.search(params[:name])
     render json: ItemSerializer.new(items)
   end
+
+  def create
+    item = Item.create(item_params)
+    render json: ItemSerializer.new(item)
+  end
+
+  private
+  def item_params
+    params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
+  end
 end
