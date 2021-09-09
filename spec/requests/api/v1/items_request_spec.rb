@@ -127,4 +127,73 @@ RSpec.describe 'items requests' do
        expect(merchant_response[:data][:type]).to eq('merchant')
      end
    end
+
+
+   describe 'create' do
+     it 'can create a new item' do
+       merchant = create(:merchant)
+       old_count = Item.all.count
+
+       post '/api/v1/items', params: {
+         name: 'Bouncy Ball',
+         description: 'It bounces',
+         unit_price: 15.40,
+         merchant_id: merchant.id
+       }, as: :json
+       expect(response).to be_successful
+
+       item = JSON.parse(response.body, symbolize_names: true)
+
+       new_count = Item.all.count
+       expect(item[:data][:type]).to eq('item')
+       expect(item[:data][:attributes][:name]).to eq('Bouncy Ball')
+       expect(item[:data][:attributes][:description]).to eq('It bounces')
+       expect(item[:data][:attributes][:unit_price]).to eq(15.40)
+       expect(item[:data][:attributes][:merchant_id]).to eq(merchant.id)
+       expect(new_count).to eq(old_count + 1)
+     end
+   end
+
+   describe 'update' do
+     it 'can update item' do
+       item = create(:item)
+       put "/api/v1/items/#{item.id}", params: {
+         name: 'New Thing',
+         description: 'With new stuff',
+         unit_price: 99999.99,
+         merchant_id: item.merchant_id
+       }, as: :json
+       expect(response).to be_successful
+
+       item_response = JSON.parse(response.body, symbolize_names: true)
+
+       expect(item_response[:data][:type]).to eq('item')
+       expect(item_response[:data][:attributes][:name]).to eq('New Thing')
+       expect(item_response[:data][:attributes][:description]).to eq('With new stuff')
+       expect(item_response[:data][:attributes][:unit_price]).to eq(99999.99)
+       expect(item_response[:data][:attributes][:merchant_id]).to eq(item.merchant_id)
+     end
+
+     it 'does not update if merchant id does not exist' do
+       item = create(:item)
+       put "/api/v1/items/#{item.id}", params: {
+         name: 'New Thing',
+         description: 'With new stuff',
+         unit_price: 99999.99,
+         merchant_id: 234567
+       }, as: :json
+       expect(response).to_not be_successful
+     end
+   end
+
+   describe 'delete' do
+     it 'can delete an existing item' do
+       create_list(:item, 5)
+
+       delete "/api/v1/items/#{Item.first.id}"
+       expect(response).to be_successful
+
+       expect(Item.all.count).to eq(4)
+     end
+   end
 end
