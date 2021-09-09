@@ -173,7 +173,7 @@ RSpec.describe 'items requests' do
        expect(item_response[:data][:attributes][:unit_price]).to eq(99999.99)
        expect(item_response[:data][:attributes][:merchant_id]).to eq(item.merchant_id)
      end
-     
+
      it 'does not update if merchant id does not exist' do
        item = create(:item)
        put "/api/v1/items/#{item.id}", params: {
@@ -187,6 +187,13 @@ RSpec.describe 'items requests' do
    end
 
    describe 'delete' do
+     it 'can delete an existing item' do
+       create_list(:item, 5)
 
+       delete "/api/v1/items/#{Item.first.id}"
+       expect(response).to be_successful
+
+       expect(Item.all.count).to eq(4)
+     end
    end
 end
