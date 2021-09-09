@@ -19,7 +19,11 @@ class Api::V1::MerchantsController <ApplicationController
 
   def find
     merchant = Merchant.search(params[:name])
-    render json: MerchantSerializer.new(merchant)
+    if merchant.nil?
+      render json: {data: {message: 'No match found'}}
+    else
+      render json: MerchantSerializer.new(merchant)
+    end
   end
 
   def revenue

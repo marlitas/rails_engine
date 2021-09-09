@@ -12,6 +12,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def self.date_range_revenue(start, end_date)
+    require "pry";binding.pry
     joins(invoice: :transactions)
     .where('invoices.status = ?', 'shipped')
     .where('transactions.result = ?', 'success')
