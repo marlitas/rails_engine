@@ -31,7 +31,7 @@ class Api::V1::ItemsController < ApplicationController
       item.update(item_params)
       render json: ItemSerializer.new(item), status: :accepted
     else
-      render json: {error: 'merchant does not exist'}, status: :not_found
+      render json: { error: 'merchant does not exist' }, status: :not_found
     end
   end
 
@@ -42,6 +42,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   private
+
   def item_params
     params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
   end
