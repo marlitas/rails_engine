@@ -3,29 +3,27 @@ class MerchantSerializer
   attributes :name
 
   def self.revenue(merchant)
-    {data:
+    { data:
       {
-      id: "#{merchant.id}",
-      type: 'merchant_revenue',
-      attributes: {
-        revenue: merchant.total_revenue
+        id: merchant.id.to_s,
+        type: 'merchant_revenue',
+        attributes: {
+          revenue: merchant.total_revenue
         }
-      }
-    }
+      } }
   end
 
   def self.top_revenue(merchants)
-    {data:
+    { data:
       merchants.map do |merchant|
         {
-        id: "#{merchant.id}",
-        type: 'merchant_name_revenue',
-        attributes: {
-          name: merchant.name,
-          revenue: merchant.revenue
+          id: merchant.id.to_s,
+          type: 'merchant_name_revenue',
+          attributes: {
+            name: merchant.name,
+            revenue: merchant.revenue
           }
         }
-      end
-    }
+      end }
   end
 end

@@ -195,5 +195,22 @@ RSpec.describe 'items requests' do
 
        expect(Item.all.count).to eq(4)
      end
+
+     it 'it also deletes invoice if item was only one' do
+       create_list(:item, 5)
+       create_list(:invoice_shipped, 5)
+
+       ii1 = create(:invoice_item, item: Item.first, invoice: Invoice.first)
+       ii2 = create(:invoice_item, item: Item.second, invoice: Invoice.second)
+       ii3 = create(:invoice_item, item: Item.third, invoice: Invoice.third)
+       ii4 = create(:invoice_item, item: Item.fourth, invoice: Invoice.fourth)
+       ii5 = create(:invoice_item, item: Item.fifth, invoice: Invoice.fifth)
+
+       delete "/api/v1/items/#{Item.first.id}"
+       expect(response).to be_successful
+
+       expect(Item.all.count).to eq(4)
+       expect(Invoice.all.count).to eq(4)
+     end
    end
 end

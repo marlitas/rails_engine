@@ -1,4 +1,4 @@
-class Api::V1::MerchantsController <ApplicationController
+class Api::V1::MerchantsController < ApplicationController
   def index
     params[:per_page] = 20 if params[:per_page].nil?
     params[:page] = 1 if params[:page].nil? || params[:page].to_i <= 0
@@ -9,17 +9,21 @@ class Api::V1::MerchantsController <ApplicationController
 
   def show
     item = Item.find(params[:item_id]) unless params[:item_id].nil?
-    if item.nil?
-      merchant = Merchant.find(params[:id])
-    else
-      merchant = Merchant.find(item.merchant_id)
-    end
+    merchant = if item.nil?
+                 Merchant.find(params[:id])
+               else
+                 Merchant.find(item.merchant_id)
+               end
     render json: MerchantSerializer.new(merchant)
   end
 
   def find
     merchant = Merchant.search(params[:name])
-    render json: MerchantSerializer.new(merchant)
+    if merchant.nil?
+      render json: { data: { message: 'No match found' } }
+    else
+      render json: MerchantSerializer.new(merchant)
+    end
   end
 
   def revenue
@@ -29,11 +33,11 @@ class Api::V1::MerchantsController <ApplicationController
 
   def top_revenue
     params
-    if params[:quantity].to_i.to_s == params[:quantity] && params[:quantity].to_i > 0
+    if params[:quantity].to_i.to_s == params[:quantity] && params[:quantity].to_i.positive?
       merchants = Merchant.top_revenue(params[:quantity])
       render json: MerchantSerializer.top_revenue(merchants)
     else
-      render json: {error: 'Quantity param missing or incorrect formatting'}, status: :bad_request
+      render json: { error: 'Quantity param missing or incorrect formatting' }, status: :bad_request
     end
   end
 end
