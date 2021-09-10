@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2021-09-10T08:40:07-07:00">2021-09-10T08:40:07-07:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2021-09-10T09:04:22-07:00">2021-09-10T09:04:22-07:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -73,7 +73,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#58674c43947aaef82a7d4d78d2c7e563492d19ff" class="src_link" title="app/controllers/api/v1/items_controller.rb">app/controllers/api/v1/items_controller.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">48</td>
+            <td class="cell--number">49</td>
             <td class="cell--number">30</td>
             <td class="cell--number">30</td>
             <td class="cell--number">0</td>
@@ -205,7 +205,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#ea26aeac59c7c2e64cff2ffdefed27bc3a090533" class="src_link" title="app/serializers/merchant_serializer.rb">app/serializers/merchant_serializer.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">31</td>
+            <td class="cell--number">29</td>
             <td class="cell--number">8</td>
             <td class="cell--number">8</td>
             <td class="cell--number">0</td>
@@ -216,7 +216,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#31764826897bef97e41dd61995dab1d38d282699" class="src_link" title="app/serializers/revenue_serializer.rb">app/serializers/revenue_serializer.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">27</td>
+            <td class="cell--number">23</td>
             <td class="cell--number">6</td>
             <td class="cell--number">6</td>
             <td class="cell--number">0</td>
@@ -945,7 +945,7 @@
 
             
 
-            <code class="ruby">      render json: {error: &#39;merchant does not exist&#39;}, status: :not_found</code>
+            <code class="ruby">      render json: { error: &#39;merchant does not exist&#39; }, status: :not_found</code>
           </li>
         </div>
       
@@ -1060,7 +1060,18 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="45">
+          <li class="never" data-hits="" data-linenumber="45">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="46">
             <span class="hits">1</span>
             
 
@@ -1071,7 +1082,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="46">
+          <li class="covered" data-hits="2" data-linenumber="47">
             <span class="hits">2</span>
             
 
@@ -1082,7 +1093,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="47">
+          <li class="never" data-hits="" data-linenumber="48">
             
             
 
@@ -1093,7 +1104,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="48">
+          <li class="never" data-hits="" data-linenumber="49">
             
             
 
@@ -1141,7 +1152,7 @@
 
             
 
-            <code class="ruby">class Api::V1::MerchantsController &lt;ApplicationController</code>
+            <code class="ruby">class Api::V1::MerchantsController &lt; ApplicationController</code>
           </li>
         </div>
       
@@ -1262,7 +1273,7 @@
 
             
 
-            <code class="ruby">    if item.nil?</code>
+            <code class="ruby">    merchant = if item.nil?</code>
           </li>
         </div>
       
@@ -1273,7 +1284,7 @@
 
             
 
-            <code class="ruby">      merchant = Merchant.find(params[:id])</code>
+            <code class="ruby">                 Merchant.find(params[:id])</code>
           </li>
         </div>
       
@@ -1284,7 +1295,7 @@
 
             
 
-            <code class="ruby">    else</code>
+            <code class="ruby">               else</code>
           </li>
         </div>
       
@@ -1295,7 +1306,7 @@
 
             
 
-            <code class="ruby">      merchant = Merchant.find(item.merchant_id)</code>
+            <code class="ruby">                 Merchant.find(item.merchant_id)</code>
           </li>
         </div>
       
@@ -1306,7 +1317,7 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">               end</code>
           </li>
         </div>
       
@@ -1383,7 +1394,7 @@
 
             
 
-            <code class="ruby">      render json: {data: {message: &#39;No match found&#39;}}</code>
+            <code class="ruby">      render json: { data: { message: &#39;No match found&#39; } }</code>
           </li>
         </div>
       
@@ -1526,7 +1537,7 @@
 
             
 
-            <code class="ruby">    if params[:quantity].to_i.to_s == params[:quantity] &amp;&amp; params[:quantity].to_i &gt; 0</code>
+            <code class="ruby">    if params[:quantity].to_i.to_s == params[:quantity] &amp;&amp; params[:quantity].to_i.positive?</code>
           </li>
         </div>
       
@@ -1570,7 +1581,7 @@
 
             
 
-            <code class="ruby">      render json: {error: &#39;Quantity param missing or incorrect formatting&#39;}, status: :bad_request</code>
+            <code class="ruby">      render json: { error: &#39;Quantity param missing or incorrect formatting&#39; }, status: :bad_request</code>
           </li>
         </div>
       
@@ -1733,7 +1744,7 @@
 
             
 
-            <code class="ruby">      render json: {error: &#39;Start or end date params missing&#39;}, status: :bad_request</code>
+            <code class="ruby">      render json: { error: &#39;Start or end date params missing&#39; }, status: :bad_request</code>
           </li>
         </div>
       
@@ -1755,7 +1766,7 @@
 
             
 
-            <code class="ruby">      render json: {error: &#39;Start or end date params missing&#39;}, status: :bad_request</code>
+            <code class="ruby">      render json: { error: &#39;Start or end date params missing&#39; }, status: :bad_request</code>
           </li>
         </div>
       
@@ -1991,7 +2002,7 @@
 
             
 
-            <code class="ruby">  has_many :invoices</code>
+            <code class="ruby">  has_many :invoices, dependent: :destroy</code>
           </li>
         </div>
       
@@ -2055,7 +2066,7 @@
 
             
 
-            <code class="ruby">  has_many :transactions</code>
+            <code class="ruby">  has_many :transactions, dependent: :destroy</code>
           </li>
         </div>
       
@@ -2143,7 +2154,7 @@
 
             
 
-            <code class="ruby">    .select(&#39;invoices.id&#39;)</code>
+            <code class="ruby">      .select(&#39;invoices.id&#39;)</code>
           </li>
         </div>
       
@@ -2154,7 +2165,7 @@
 
             
 
-            <code class="ruby">    .group(&#39;invoices.id&#39;)</code>
+            <code class="ruby">      .group(&#39;invoices.id&#39;)</code>
           </li>
         </div>
       
@@ -2165,7 +2176,7 @@
 
             
 
-            <code class="ruby">    .having(&#39;count(invoice_items.invoice_id) = 1&#39;)</code>
+            <code class="ruby">      .having(&#39;count(invoice_items.invoice_id) = 1&#39;)</code>
           </li>
         </div>
       
@@ -2176,7 +2187,7 @@
 
             
 
-            <code class="ruby">    .pluck(&#39;invoices.id&#39;)</code>
+            <code class="ruby">      .pluck(&#39;invoices.id&#39;)</code>
           </li>
         </div>
       
@@ -2306,7 +2317,7 @@
 
             
 
-            <code class="ruby">    .where(&#39;invoices.status = ?&#39;, &#39;shipped&#39;)</code>
+            <code class="ruby">      .where(&#39;invoices.status = ?&#39;, &#39;shipped&#39;)</code>
           </li>
         </div>
       
@@ -2317,7 +2328,7 @@
 
             
 
-            <code class="ruby">    .where(&#39;transactions.result = ?&#39;, &#39;success&#39;)</code>
+            <code class="ruby">      .where(&#39;transactions.result = ?&#39;, &#39;success&#39;)</code>
           </li>
         </div>
       
@@ -2328,7 +2339,7 @@
 
             
 
-            <code class="ruby">    .select(&quot;SUM(invoice_items.unit_price * invoice_items.quantity) as revenue, date_trunc(&#39;week&#39;, invoices.updated_at) as week&quot;)</code>
+            <code class="ruby">      .select(&quot;SUM(invoice_items.unit_price * invoice_items.quantity) as revenue, date_trunc(&#39;week&#39;, invoices.updated_at) as week&quot;)</code>
           </li>
         </div>
       
@@ -2339,7 +2350,7 @@
 
             
 
-            <code class="ruby">    .group(&quot;week&quot;)</code>
+            <code class="ruby">      .group(&#39;week&#39;)</code>
           </li>
         </div>
       
@@ -2350,7 +2361,7 @@
 
             
 
-            <code class="ruby">    .order(&quot;week&quot;)</code>
+            <code class="ruby">      .order(&#39;week&#39;)</code>
           </li>
         </div>
       
@@ -2405,7 +2416,7 @@
 
             
 
-            <code class="ruby">    .where(&#39;invoices.status = ?&#39;, &#39;shipped&#39;)</code>
+            <code class="ruby">      .where(&#39;invoices.status = ?&#39;, &#39;shipped&#39;)</code>
           </li>
         </div>
       
@@ -2416,7 +2427,7 @@
 
             
 
-            <code class="ruby">    .where(&#39;transactions.result = ?&#39;, &#39;success&#39;)</code>
+            <code class="ruby">      .where(&#39;transactions.result = ?&#39;, &#39;success&#39;)</code>
           </li>
         </div>
       
@@ -2427,7 +2438,7 @@
 
             
 
-            <code class="ruby">    .where(&#39;invoices.updated_at &gt;= ?&#39;, start.to_datetime)</code>
+            <code class="ruby">      .where(&#39;invoices.updated_at &gt;= ?&#39;, start.to_datetime)</code>
           </li>
         </div>
       
@@ -2438,7 +2449,7 @@
 
             
 
-            <code class="ruby">    .where(&#39;invoices.updated_at &lt;= ?&#39;, end_date.to_datetime)</code>
+            <code class="ruby">      .where(&#39;invoices.updated_at &lt;= ?&#39;, end_date.to_datetime)</code>
           </li>
         </div>
       
@@ -2449,7 +2460,7 @@
 
             
 
-            <code class="ruby">    .sum(&quot;invoice_items.unit_price * invoice_items.quantity&quot;)</code>
+            <code class="ruby">      .sum(&#39;invoice_items.unit_price * invoice_items.quantity&#39;)</code>
           </li>
         </div>
       
@@ -2720,7 +2731,7 @@
 
             
 
-            <code class="ruby">  has_many :items</code>
+            <code class="ruby">  has_many :items, dependent: :destroy</code>
           </li>
         </div>
       
@@ -2830,7 +2841,7 @@
 
             
 
-            <code class="ruby">    .sum(&#39;invoice_items.quantity * invoice_items.unit_price&#39;).round(2)</code>
+            <code class="ruby">            .sum(&#39;invoice_items.quantity * invoice_items.unit_price&#39;).round(2)</code>
           </li>
         </div>
       
@@ -2885,7 +2896,7 @@
 
             
 
-            <code class="ruby">    .where(&#39;invoices.status = ?&#39;, &#39;shipped&#39;)</code>
+            <code class="ruby">      .where(&#39;invoices.status = ?&#39;, &#39;shipped&#39;)</code>
           </li>
         </div>
       
@@ -2896,7 +2907,7 @@
 
             
 
-            <code class="ruby">    .where(&#39;transactions.result = ?&#39;, &#39;success&#39;)</code>
+            <code class="ruby">      .where(&#39;transactions.result = ?&#39;, &#39;success&#39;)</code>
           </li>
         </div>
       
@@ -2907,7 +2918,7 @@
 
             
 
-            <code class="ruby">    .joins(invoice_items: [{invoice: :transactions}])</code>
+            <code class="ruby">      .joins(invoice_items: [{ invoice: :transactions }])</code>
           </li>
         </div>
       
@@ -2918,7 +2929,7 @@
 
             
 
-            <code class="ruby">    .group(&#39;merchants.id&#39;)</code>
+            <code class="ruby">      .group(&#39;merchants.id&#39;)</code>
           </li>
         </div>
       
@@ -2929,7 +2940,7 @@
 
             
 
-            <code class="ruby">    .order(&#39;revenue desc&#39;)</code>
+            <code class="ruby">      .order(&#39;revenue desc&#39;)</code>
           </li>
         </div>
       
@@ -2940,7 +2951,7 @@
 
             
 
-            <code class="ruby">    .limit(quantity.to_i)</code>
+            <code class="ruby">      .limit(quantity.to_i)</code>
           </li>
         </div>
       
@@ -3198,7 +3209,7 @@
 
             
 
-            <code class="ruby">    {data:</code>
+            <code class="ruby">    { data:</code>
           </li>
         </div>
       
@@ -3220,7 +3231,7 @@
 
             
 
-            <code class="ruby">      id: &quot;#{merchant.id}&quot;,</code>
+            <code class="ruby">        id: merchant.id.to_s,</code>
           </li>
         </div>
       
@@ -3231,7 +3242,7 @@
 
             
 
-            <code class="ruby">      type: &#39;merchant_revenue&#39;,</code>
+            <code class="ruby">        type: &#39;merchant_revenue&#39;,</code>
           </li>
         </div>
       
@@ -3242,7 +3253,7 @@
 
             
 
-            <code class="ruby">      attributes: {</code>
+            <code class="ruby">        attributes: {</code>
           </li>
         </div>
       
@@ -3253,7 +3264,7 @@
 
             
 
-            <code class="ruby">        revenue: merchant.total_revenue</code>
+            <code class="ruby">          revenue: merchant.total_revenue</code>
           </li>
         </div>
       
@@ -3275,7 +3286,7 @@
 
             
 
-            <code class="ruby">      }</code>
+            <code class="ruby">      } }</code>
           </li>
         </div>
       
@@ -3286,7 +3297,7 @@
 
             
 
-            <code class="ruby">    }</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -3297,23 +3308,12 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="16">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="17">
+          <li class="covered" data-hits="1" data-linenumber="16">
             <span class="hits">1</span>
             
 
@@ -3324,18 +3324,18 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="18">
+          <li class="covered" data-hits="1" data-linenumber="17">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    {data:</code>
+            <code class="ruby">    { data:</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="19">
+          <li class="never" data-hits="" data-linenumber="18">
             
             
 
@@ -3346,7 +3346,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="20">
+          <li class="never" data-hits="" data-linenumber="19">
             
             
 
@@ -3357,13 +3357,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="21">
+          <li class="covered" data-hits="3" data-linenumber="20">
             <span class="hits">3</span>
             
 
             
 
-            <code class="ruby">        id: &quot;#{merchant.id}&quot;,</code>
+            <code class="ruby">          id: merchant.id.to_s,</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="21">
+            
+            
+
+            
+
+            <code class="ruby">          type: &#39;merchant_name_revenue&#39;,</code>
           </li>
         </div>
       
@@ -3374,7 +3385,7 @@
 
             
 
-            <code class="ruby">        type: &#39;merchant_name_revenue&#39;,</code>
+            <code class="ruby">          attributes: {</code>
           </li>
         </div>
       
@@ -3385,7 +3396,7 @@
 
             
 
-            <code class="ruby">        attributes: {</code>
+            <code class="ruby">            name: merchant.name,</code>
           </li>
         </div>
       
@@ -3396,7 +3407,7 @@
 
             
 
-            <code class="ruby">          name: merchant.name,</code>
+            <code class="ruby">            revenue: merchant.revenue</code>
           </li>
         </div>
       
@@ -3407,7 +3418,7 @@
 
             
 
-            <code class="ruby">          revenue: merchant.revenue</code>
+            <code class="ruby">          }</code>
           </li>
         </div>
       
@@ -3418,7 +3429,7 @@
 
             
 
-            <code class="ruby">          }</code>
+            <code class="ruby">        }</code>
           </li>
         </div>
       
@@ -3429,7 +3440,7 @@
 
             
 
-            <code class="ruby">        }</code>
+            <code class="ruby">      end }</code>
           </li>
         </div>
       
@@ -3440,34 +3451,12 @@
 
             
 
-            <code class="ruby">      end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="29">
-            
-            
-
-            
-
-            <code class="ruby">    }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="30">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="31">
+          <li class="never" data-hits="" data-linenumber="29">
             
             
 
@@ -3548,7 +3537,7 @@
 
             
 
-            <code class="ruby">    {data:</code>
+            <code class="ruby">    { data:</code>
           </li>
         </div>
       
@@ -3603,7 +3592,7 @@
 
             
 
-            <code class="ruby">            week: revenue.week.strftime(&quot;%Y-%m-%d&quot;),</code>
+            <code class="ruby">            week: revenue.week.strftime(&#39;%Y-%m-%d&#39;),</code>
           </li>
         </div>
       
@@ -3625,7 +3614,7 @@
 
             
 
-            <code class="ruby">          }</code>
+            <code class="ruby">          } }</code>
           </li>
         </div>
       
@@ -3636,7 +3625,7 @@
 
             
 
-            <code class="ruby">        }</code>
+            <code class="ruby">      end }</code>
           </li>
         </div>
       
@@ -3647,7 +3636,7 @@
 
             
 
-            <code class="ruby">      end</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
@@ -3658,34 +3647,12 @@
 
             
 
-            <code class="ruby">    }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="15">
-            
-            
-
-            
-
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="16">
-            
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="17">
+          <li class="covered" data-hits="1" data-linenumber="15">
             <span class="hits">1</span>
             
 
@@ -3696,7 +3663,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="18">
+          <li class="covered" data-hits="1" data-linenumber="16">
             <span class="hits">1</span>
             
 
@@ -3707,7 +3674,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="19">
+          <li class="never" data-hits="" data-linenumber="17">
             
             
 
@@ -3718,7 +3685,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="20">
+          <li class="never" data-hits="" data-linenumber="18">
             
             
 
@@ -3729,7 +3696,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="21">
+          <li class="never" data-hits="" data-linenumber="19">
             
             
 
@@ -3740,7 +3707,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="22">
+          <li class="never" data-hits="" data-linenumber="20">
             
             
 
@@ -3751,40 +3718,18 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="23">
+          <li class="never" data-hits="" data-linenumber="21">
             
             
 
             
 
-            <code class="ruby">        }</code>
+            <code class="ruby">        } } }</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="24">
-            
-            
-
-            
-
-            <code class="ruby">      }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="25">
-            
-            
-
-            
-
-            <code class="ruby">    }</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="26">
+          <li class="never" data-hits="" data-linenumber="22">
             
             
 
@@ -3795,7 +3740,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="27">
+          <li class="never" data-hits="" data-linenumber="23">
             
             
 
