@@ -5,7 +5,7 @@
   <br>
 </h1>
 
-<h4 align="center">A backend API for a fictitious e-commerce site that provides business analytics for frontend consumption.</h4>
+<h4 align="center">RESTful API for a fictitious e-commerce site that provides business analytics for frontend consumption.</h4>
 
 <p align="center">
   <a href="https://github.com/marlitas/rails_engine/graphs/contributors">
@@ -19,10 +19,6 @@
   </a>
   <a href="https://github.com/marlitas/rails_engine/issues">
     <img src="https://img.shields.io/github/issues/marlitas/rails_engine?style=for-the-badge" alt="issues_badge">
-  </a>
-  <a href="">
-    <img src="https://img.shields.io/travis/com/marlitas/rails_engine?style=for-the-badge" alt="build_badge">
-  </a>
   
   
 <!-- CONTENTS -->
@@ -41,19 +37,14 @@
 
 ## About The Project
 
-The backend of Artspiration consumes the Artsy API and Google Cloud Vision API to power a recommendation engine that connects users with exciting artwork based on their preferences. We expose endpoints that package up this material for frontend consumption to display to our users as a web application.
+Rails Engine was built to practice RESTful API development for a front end consumption. The API uses Active Record and SQL to create business analytics and expose select data and information for a front end team. 
 
 ### Learning Goals
 
-* Using an Agile process throughout development
-* Setting up continuous integration and continous deployment
-* Using project management tool Github Project
-* Demoing project ot project manager
-* Building a backend API for frontend consumption
-* Consuming endpoints and manipulating the JSON responses
-* Handling large group dynamics with short 3 day sprints
-* Working with Machine Learning outputs and implementing into app
-* Consuming Google Cloud Vision API 
+* Building and testing a RESTful API
+* Active Record/SQL queries
+* Serializing data to follow proper JSON contracts
+* CRUD functionality
 
 
 
@@ -62,12 +53,11 @@ The backend of Artspiration consumes the Artsy API and Google Cloud Vision API t
 | Development | Testing       | Gems            |
 |   :----:    |    :----:     |    :----:       |
 | Ruby 2.7.2  | RSpec         | Pry             |
-| Rails 5.2.5 | WebMock       | ShouldaMatchers |
-| JSON        | VCR           | Faraday         |
-| Atom        | SimpleCov     | Figaro          |
-| Github      | FactoryBot    | FastJSON        |
-| TravisCI    | Faker         |                 |
-| Heroku      |               |                 |
+| Rails 5.2.5 | SimpleCov     | ShouldaMatchers |
+| JSON        | FactoryBot    | Faraday         |
+| Atom        | Faker         | FastJSON        |
+| Git/Github  |       |      |
+| Heroku      |          |                 |
 
 
 
@@ -97,32 +87,21 @@ gem install rails --version 5.2.5
 
 ## Installation
 
-1. Get a free API Key at [Artsy API](https://api.artsy.net)
-2. Get a free (with limits) Google Vision API KEY by following directions [here](https://cloud.google.com/vision/docs/setup)
-3. Fork this repo
-4. Clone your new repo
+1. Fork this repo
+2. Clone your new repo
    ```sh
    git clone https://github.com/#{your_github_username}/ArtspirationBE.git
    ```
-4. Install gems
+3. Install gems
    ```sh
    bundle install
-   ```
-5. Install figaro
-    ```sh
-   bundle exec figaro install
-   ```
-6. Enter your API KEYS in `application.yml`
-   ```ruby
-   artsy_api_key = <ENTER YOUR API KEY>
-   google_api_key = <ENTER YOUR API KEY>
-   key = <ENTER YOUR API KEY>
-   ```
-7. Setup the database
+   ``` 
+4. Setup the database
     ```sh
    rails db:create
    rails db:migrate
    ```
+5. 
 
 
 
