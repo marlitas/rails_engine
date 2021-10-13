@@ -90,7 +90,7 @@ gem install rails --version 5.2.5
 1. Fork this repo
 2. Clone your new repo
    ```sh
-   git clone https://github.com/#{your_github_username}/ArtspirationBE.git
+   git clone https://github.com/#{your_github_username}/rails_engine.git
    ```
 3. Install gems
    ```sh
@@ -107,7 +107,7 @@ gem install rails --version 5.2.5
 
 ## How To Use
 
-The Artspiration Backend can be used to retrieve user preferences for artwork, as well as make calls to the Artsy API for specific artwork information including: title, artist, image(jpg). The backend can also provide daily recommendations for a piece of art based on past user preferences. Preferences are generated through label and image properties determined by the Google Cloud Vision API. The recommendation engine is built using a combination of collaborative filtering as well as sorting through the saved user preferences.
+Rails Engine can be used to access fictitious e-commerce data and calculations. 
 
 
 
