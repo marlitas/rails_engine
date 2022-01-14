@@ -101,8 +101,6 @@ gem install rails --version 5.2.5
    rails db:create
    rails db:migrate
    ```
-5. 
-
 
 
 ## How To Use
@@ -112,106 +110,83 @@ Rails Engine can be used to access fictitious e-commerce data and calculations.
 
 
 ### Endpoint Documentation
-[User Endpoint](https://peaceful-reef-61917.herokuapp.com/api/v1/users/133)
-<br>
 Request:
-`/api/v1/users/:id`
-
-Response:
-```json
-{
-  "data": {
-  "id": "133",
-  "type": "user",
-  "attributes": {
-    "name": "Melanie Swaniawski",
-    "email": "shameka_goyette@bartell.co"
-    }
-  }
-}
-```
-
-[Recommeded Art Endpoint](https://peaceful-reef-61917.herokuapp.com/api/v1/users/133/recommendations)
-<br>
-Request:
-`/api/v1/users/:id/recommendations`
+`GET /api/v1/merchants?per_page=50&page=2`
 
 Response:
 ```json
 {
   "data": [
     {
-      "id": 168,
-      "type": "recommended_art",
+      "id": "1",
+        "type": "merchant",
+        "attributes": {
+          "name": "Store 1",
+        }
+    },
+    {
+      "id": "2",
+      "type": "merchant",
       "attributes": {
-        "title": "Virgin of the Rocks",
-        "image": "https://d32dm0rphc51dk.cloudfront.net/Jv-e1fhDjg61OYhhsMoiQg/{image_version}.jpg",
-        "user_id": 133
+        "name": "Store 2",
+      }
+    },
+    {
+      "id": "3",
+      "type": "merchant",
+      "attributes": {
+        "name": "Store 3",
       }
     }
   ]
 }
 ```
 
-[Rated Art Index Endpoint](https://peaceful-reef-61917.herokuapp.com/api/v1/users/133/rated_arts)
-<br>
 Request:
-`/api/v1/users/:id/rated_arts`
-
-Response:
-```json
-{
-  "data": [
-      {
-        "id": 175,
-        "type": "rated_art",
-        "attributes": {
-          "title": "La Grande Odalisque",
-          "image": "https://d32dm0rphc51dk.cloudfront.net/crVj8GvGliFrpExNfHWl4Q/medium.jpg",
-          "liked": true,
-          "user_id": 145
-        }
-      },
-      {
-        "id": 184,
-        "type": "rated_art",
-        "attributes": {
-          "title": "L'Embarquement pour Cythère (The Embarkation for Cythera)",
-          "image": "https://d32dm0rphc51dk.cloudfront.net/Ux_L_UKjxgR-gJ6XZYVgVg/medium.jpg",
-          "liked": true,
-          "user_id": 145
-        }
-      }
-   ]
-}
-```
-
-[Rated Art Show Endpoint](https://peaceful-reef-61917.herokuapp.com/api/v1/users/145/rated_arts/174)
-<br>
-Request:
-`/api/v1/users/:id/rated_arts/:art_id`
+`GET /api/v1/<resource>/:id`
 
 Response:
 ```json
 {
   "data": {
-    "id": 106,
-    "type": "rated_art",
+    "id": "1",
+    "type": "item",
     "attributes": {
-      "title": "The Tête à Tête",
-      "image": "https://d32dm0rphc51dk.cloudfront.net/5KJ7_u7BPqeltkfEnyijIw/medium.jpg",
-      "liked": true,
-      "user_id": 145
+      "name": "Bouncy Ball",
+      "description": "A really bouncy ball",
+      "unit_price": 109.99
     }
   }
 }
 ```
+    
+Request:
+`POST /api/v1/items`
+    
+ ```json
+ {
+  "name": "value1",
+  "description": "value2",
+  "unit_price": 100.99,
+  "merchant_id": 14
+ }
+ ```
 
-
-
-## Database Schema
-![artspiration_be_schema](https://user-images.githubusercontent.com/80797707/134600560-be2d2a0d-290d-4757-b28f-1eb24a929f03.jpg)
-
+Response:
+```json
+{
+  "data": {
+    "id": "16",
+    "type": "item",
+    "attributes": {
+      "name": "Widget",
+      "description": "High quality widget",
+      "unit_price": 100.99,
+      "merchant_id": 14
+    }
+  }
+}
+```
 
 
 ## Contributing
